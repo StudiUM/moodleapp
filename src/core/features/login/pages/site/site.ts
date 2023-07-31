@@ -49,6 +49,7 @@ import { CoreKeyboard } from '@singletons/keyboard';
 import { CoreModals } from '@services/modals';
 import { CoreQRScan } from '@services/qrscan';
 import { CoreLoadings } from '@services/loadings';
+import { CoreStyles } from '@features/styles/services/styles';
 
 /**
  * Site (url) chooser when adding a new site.
@@ -144,6 +145,7 @@ export class CoreLoginSitePage implements OnInit {
         }, 1000);
 
         this.showKeyboard = !!CoreNavigator.getRouteBooleanParam('showKeyboard');
+        CoreStyles.setStudiumDefaultSite();
     }
 
     /**
@@ -155,6 +157,9 @@ export class CoreLoginSitePage implements OnInit {
         const availableSites = await CoreLoginHelper.getAvailableSites();
         this.fixedSites = this.extendCoreLoginSiteInfo(<CoreLoginSiteInfoExtended[]> availableSites);
         this.siteSelector = 'list'; // In case it's not defined
+        if (CoreConstants.CONFIG.multisitesdisplay === 'radio') {
+            this.siteSelector = 'radio';
+        }
 
         // Do not show images if none are set.
         if (!this.fixedSites.some((site) => !!site.imageurl)) {

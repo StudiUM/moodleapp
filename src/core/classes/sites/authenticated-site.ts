@@ -1276,20 +1276,7 @@ export class CoreAuthenticatedSite extends CoreUnauthenticatedSite {
      * @deprecated since 4.5. Not needed anymore.
      */
     async getDocsUrl(page?: string): Promise<string> {
-        const release = this.infos?.release ? this.infos.release : undefined;
-        let docsUrl = 'https://docs.moodle.org/en/' + page;
-
-        if (release !== undefined) {
-            // Remove this part of the function if this file only uses CoreSites here.
-            const version = CoreSites.getMajorReleaseNumber(release).replace('.', '');
-
-            // Check is a valid number.
-            if (Number(version) >= 24) {
-                // Append release number.
-                docsUrl = docsUrl.replace('https://docs.moodle.org/', 'https://docs.moodle.org/' + version + '/');
-            }
-        }
-
+        const docsUrl = CoreConstants.CONFIG.docurl;
         try {
             // Remove this part of the function if this file only uses CoreLang here.
             let lang = CoreLang.getCurrentLanguageSync(CoreLangFormat.LMS);
