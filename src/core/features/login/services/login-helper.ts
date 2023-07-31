@@ -1663,6 +1663,7 @@ export type CoreLoginSiteSelectorListMethod =
     'url'|
     'sitefinder'|
     'list'|
+    'radio'|
     '';
 
 export type CoreLoginMethod = {

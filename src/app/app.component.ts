@@ -23,11 +23,13 @@ import { CoreNavigator } from '@services/navigator';
 import { CoreSubscriptions } from '@singletons/subscriptions';
 import { CoreWindow } from '@singletons/window';
 import { CoreUtils } from '@services/utils/utils';
+import { CoreConstants } from '@/core/constants';
+import { CoreDomUtils } from '@services/utils/dom';
 import { CorePlatform } from '@services/platform';
 import { CoreLogger } from '@singletons/logger';
 import { CorePromisedValue } from '@classes/promised-value';
 import { register } from 'swiper/element/bundle';
-
+import { CoreConfig } from '@services/config';
 register();
 
 @Component({
@@ -116,6 +118,27 @@ export class AppComponent implements OnInit, AfterViewInit {
             SplashScreen.hide();
             this.setSystemUIColorsAfterSplash();
         });
+    }
+
+   /**
+     * Set dom StudiUM current site.
+     */
+    protected async setStudiumCurrentSite(): Promise<void> {
+        const currentsite = CoreConstants.STUDIUM;
+        CoreDomUtils.toggleModeClass(CoreConstants.STUDIUM, false);
+        CoreDomUtils.toggleModeClass(CoreConstants.STUDIUMFC, false);
+        CoreDomUtils.toggleModeClass(currentsite, true);
+        CoreConfig.set(CoreConstants.CURRENT_STUDIUM_SITE, currentsite);
+        const studiumcurrent = await CoreConfig.get(CoreConstants.CURRENT_STUDIUM_SITE, '');
+
+        if (studiumcurrent !== '') {
+            CoreDomUtils.toggleModeClass(CoreConstants.STUDIUM, false);
+            CoreDomUtils.toggleModeClass(CoreConstants.STUDIUMFC, false);
+            CoreDomUtils.toggleModeClass(studiumcurrent, true);
+        } else {
+            CoreDomUtils.toggleModeClass(CoreConstants.STUDIUM, true);
+            CoreConfig.set(CoreConstants.CURRENT_STUDIUM_SITE, CoreConstants.STUDIUM);
+        }
     }
 
     /**
