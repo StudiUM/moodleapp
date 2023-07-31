@@ -1393,6 +1393,7 @@ export const enum CoreLoginSiteSelectorListMethod {
     URL = 'url',
     SITE_FINDER = 'sitefinder',
     LIST = 'list',
+    RADIO = 'radio',
     NONE = '',
 }
 

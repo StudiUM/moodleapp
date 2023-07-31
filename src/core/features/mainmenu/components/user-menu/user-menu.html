@@ -22,11 +22,8 @@
                 @if (displaySiteUrl) {
                     <!-- Site info with URL and clickable. -->
                     <ion-item button class="core-usermenu-siteinfo ion-text-wrap" lines="full" [detail]="false" [href]="siteUrl" core-link>
-                        <ion-label>
-                            <!-- Show site logo. -->
-                            <core-site-logo [hideOnError]="true" siteNameMode="p" />
-                            <a [href]="siteUrl" core-link class="core-usermenu-siteurl">{{ siteUrl }}</a>
-                        </ion-label>
+                        <!-- Show site logo. -->
+                        <div class="core-login-site-logo-studium usermenu" [attr.aria-label]="siteName"></div>
                     </ion-item>
                 } @else {
                     <!-- Site info without URL and not clickable. -->
