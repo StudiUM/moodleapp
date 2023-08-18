@@ -33,6 +33,7 @@ import { CoreNavigator } from '@services/navigator';
 import { ContextLevel } from '@/core/constants';
 import { CoreUtils } from '@services/utils/utils';
 import { ADDON_COMPETENCY_SUMMARY_PAGE } from '@addons/competency/constants';
+import { CoreTextUtils } from '@services/utils/text';
 import { CoreSwipeNavigationItemsManager } from '@classes/items-management/swipe-navigation-items-manager';
 import { CoreRoutedItemsManagerSourcesTracker } from '@classes/items-management/routed-items-manager-sources-tracker';
 import { AddonCompetencyPlanCompetenciesSource } from '@addons/competency/classes/competency-plan-competencies-source';
@@ -157,7 +158,7 @@ export class AddonCompetencyCompetencyPage implements OnInit, OnDestroy {
             this.competency.evidence.forEach((evidence) => {
                 if (evidence.descidentifier) {
                     const key = 'addon.competency.' + evidence.descidentifier;
-                    evidence.description = Translate.instant(key, { $a: evidence.desca });
+                    evidence.description = Translate.instant(key, { $a: CoreTextUtils.parseJSON(evidence.desca, null) });
                 }
             });
 
