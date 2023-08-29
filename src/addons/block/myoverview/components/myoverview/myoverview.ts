@@ -36,6 +36,7 @@ import { CoreNavigator } from '@services/navigator';
 import { PageLoadWatcher } from '@classes/page-load-watcher';
 import { PageLoadsManager } from '@classes/page-loads-manager';
 import { DownloadStatus } from '@/core/constants';
+import { AddonSortHelpModalComponent } from '../sorthelpmodal/sorthelpmodal';
 
 const FILTER_PRIORITY: AddonBlockMyOverviewTimeFilters[] =
     ['all', 'inprogress', 'future', 'past', 'favourite', 'allincludinghidden', 'hidden'];
@@ -59,6 +60,7 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
         loading: true,
     };
 
+    isModalOpen = false;
     downloadCourseEnabled = false;
     downloadCoursesEnabled = false;
 
@@ -85,6 +87,9 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
         shortnameEnabled: false,
         selected: 'fullname',
         enabled: false,
+        cansortbytrimester: false,
+        trimsuffix: '',
+        programscateid: '',
     };
 
     textFilter = '';
@@ -138,6 +143,15 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
         );
 
         this.currentSite = CoreSites.getRequiredCurrentSite();
+        if (this.currentSite !== undefined) {
+            const currentSiteInfo  = this.currentSite.getInfo();
+            if (currentSiteInfo !== undefined && currentSiteInfo.cansortbytrimester) {
+                this.sort.cansortbytrimester = true;
+                this.sort.selected = 'trimester';
+                this.sort.trimsuffix = 'trimester';
+                this.sort.programscateid = currentSiteInfo.programscateid;
+            }
+        }
 
         const promises: Promise<void>[] = [];
 
@@ -622,6 +636,41 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
     }
 
     /**
+     * Get course order.
+     *
+     * @param {any} Course
+     * @returns {number} number.
+     */
+    protected getCourseOrder(course: any): number {
+        // eslint-disable-next-line
+        const timseasonslist = { H : '1', E : '2', A : '3' };
+        /* eslint-disable no-useless-escape */
+        const matches = course.shortname.match(/([\-][AHE][0-9]{2})$/);
+        if (matches) {
+            const season = matches[0].substr(1, 1);
+            const year = matches[0].substr(2, 2);
+
+            return parseInt(year + timseasonslist[season]);
+        } else if (this.sort.programscateid == course.category) {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Show sort help modal.
+     */
+    async showHelp(): Promise<void> {
+        await CoreDomUtils.openModal({
+            component: AddonSortHelpModalComponent,
+            componentProps: {
+                trimsuffix: this.sort.trimsuffix,
+            },
+        });
+    }
+
+    /**
      * Sort courses
      *
      * @param sort Sort by value.
@@ -650,6 +699,19 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
                 const compareB = b.shortname.toLowerCase();
 
                 return compareA.localeCompare(compareB);
+            });
+        } else if (this.sort.selected == 'trimester') {
+            this.filteredCourses.sort((a, b) => {
+                const compareA = this.getCourseOrder(a);
+                const compareB = this.getCourseOrder(b);
+                if ((compareB - compareA) == 0) {
+                    const compareA = a.fullname.toLowerCase();
+                    const compareB = b.fullname.toLowerCase();
+
+                    return compareA.localeCompare(compareB);
+                }
+
+                return compareB - compareA;
             });
         }
     }
@@ -800,4 +862,7 @@ type AddonBlockMyOverviewSortOptions = {
     shortnameEnabled: boolean;
     selected: string;
     enabled: boolean;
+    cansortbytrimester: boolean;
+    trimsuffix: string;
+    programscateid?: string;
 };
