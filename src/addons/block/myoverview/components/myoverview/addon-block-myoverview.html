@@ -52,18 +52,18 @@
                         @if (filters.show.inprogress) {
                             <ion-select-option class="ion-text-wrap"
                                 [class.core-select-option-border-bottom]="!filters.show.past && !filters.show.future" value="inprogress">
-                                {{ 'addon.block_myoverview.inprogress' | translate }}
+                                {{ 'addon.block_myoverview.inprogress' + sort.trimsuffix | translate }}
                             </ion-select-option>
                         }
                         @if (filters.show.future) {
                             <ion-select-option class="ion-text-wrap" [class.core-select-option-border-bottom]="!filters.show.past"
                                 value="future">
-                                {{ 'addon.block_myoverview.future' | translate }}
+                                {{ 'addon.block_myoverview.future' + sort.trimsuffix | translate }}
                             </ion-select-option>
                         }
                         @if (filters.show.past) {
                             <ion-select-option class="ion-text-wrap core-select-option-border-bottom" value="past">
-                                {{ 'addon.block_myoverview.past' | translate }}
+                                {{ 'addon.block_myoverview.past' + sort.trimsuffix | translate }}
                             </ion-select-option>
                         }
                         @if (filters.show.custom) {
@@ -86,6 +86,13 @@
                             </ion-select-option>
                         }
                     </core-combobox>
+                </ion-col>
+                <ion-col>
+                    <ion-buttons>
+                        <ion-button fill="clear" (click)="showHelp()" [attr.aria-label]="'core.help' | translate" slot="end">
+                            <ion-icon slot="icon-only" name="help-circle-outline" aria-hidden="true" size="large"></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
                 </ion-col>
             }
             <ion-col>

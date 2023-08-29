@@ -615,6 +615,8 @@ export type CoreSiteInfoResponse = {
     usercanchangeconfig?: boolean; // @since 5.2. Whether the user can change the site configuration.
     usercanviewconfig?: boolean; // @since 5.2. Whether the user can view the site administration tree.
     sitesecret?: string; // @since 5.2. The site secret, only returned to users with moodle/site:config capability (usually admins).
+    cansortbytrimester?: boolean;
+    programscateid?: string;
 };
 
 /**

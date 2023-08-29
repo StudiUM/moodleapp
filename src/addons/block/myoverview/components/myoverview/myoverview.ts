@@ -45,6 +45,8 @@ import {
 import { CoreAlerts } from '@services/overlays/alerts';
 import { Translate } from '@singletons';
 import { CoreCourseDownloadStatusIcon } from '@features/course/constants';
+import { AddonSortHelpModalComponent } from '../sorthelpmodal/sorthelpmodal';
+import { CoreModals } from '@services/overlays/modals';
 
 const FILTER_PRIORITY: AddonBlockMyOverviewTimeFilters[] =
     ['all', 'inprogress', 'future', 'past', 'favourite', 'allincludinghidden', 'hidden', 'custom'];
@@ -72,6 +74,7 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
         loading: true,
     };
 
+    isModalOpen = false;
     downloadCourseEnabled = false;
     downloadCoursesEnabled = false;
 
@@ -98,6 +101,9 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
         shortnameEnabled: false,
         selected: 'fullname',
         enabled: false,
+        cansortbytrimester: false,
+        trimsuffix: '',
+        programscateid: '',
     };
 
     textFilter = '';
@@ -151,6 +157,15 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
         );
 
         this.currentSite = CoreSites.getRequiredCurrentSite();
+        if (this.currentSite !== undefined) {
+            const currentSiteInfo  = this.currentSite.getInfo();
+            if (currentSiteInfo !== undefined && currentSiteInfo.cansortbytrimester) {
+                this.sort.cansortbytrimester = true;
+                this.sort.selected = 'trimester';
+                this.sort.trimsuffix = 'trimester';
+                this.sort.programscateid = currentSiteInfo.programscateid;
+            }
+        }
 
         const promises: Promise<void>[] = [];
 
@@ -633,6 +648,7 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
     }
 
     /**
+<<<<<<< HEAD
      * Get the first active filter, 'all' if no active filter.
      *
      * @returns First active filter.
@@ -645,6 +661,41 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
 
         // Use first custom filter if there's any.
         return this.filters.customFilters.length ? 'custom-0' : 'all';
+    }
+
+    /**
+     * Get course order.
+     *
+     * @param {any} course
+     * @returns {number} number.
+     */
+    protected getCourseOrder(course: any): number {
+        // eslint-disable-next-line
+        const timseasonslist = { H : '1', E : '2', A : '3' };
+        /* eslint-disable no-useless-escape */
+        const matches = course.shortname.match(/([\-][AHE][0-9]{2})$/);
+        if (matches) {
+            const season = matches[0].substr(1, 1);
+            const year = matches[0].substr(2, 2);
+
+            return parseInt(year + timseasonslist[season]);
+        } else if (this.sort.programscateid == course.category) {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Show sort help modal.
+     */
+    async showHelp(): Promise<void> {
+        await CoreModals.openModal({
+            component: AddonSortHelpModalComponent,
+            componentProps: {
+                trimsuffix: this.sort.trimsuffix,
+            },
+        });
     }
 
     /**
@@ -676,6 +727,19 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
                 const compareB = b.shortname.toLowerCase();
 
                 return compareA.localeCompare(compareB);
+            });
+        } else if (this.sort.selected == 'trimester') {
+            this.filteredCourses.sort((a, b) => {
+                const compareA = this.getCourseOrder(a);
+                const compareB = this.getCourseOrder(b);
+                if ((compareB - compareA) == 0) {
+                    const compareA = a.fullname.toLowerCase();
+                    const compareB = b.fullname.toLowerCase();
+
+                    return compareA.localeCompare(compareB);
+                }
+
+                return compareB - compareA;
             });
         }
     }
@@ -815,4 +879,7 @@ type AddonBlockMyOverviewSortOptions = {
     shortnameEnabled: boolean;
     selected: string;
     enabled: boolean;
+    cansortbytrimester: boolean;
+    trimsuffix: string;
+    programscateid?: string;
 };
