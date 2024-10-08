@@ -2127,6 +2127,7 @@ export type AddonModQuizAttemptWSData = {
         grade: number; // The grade this attempt earned for this item.
         maxgrade: number; // The total this grade is out of.
     }[];
+    attemptsectionsmarks?: string;
 };
 
 /**
