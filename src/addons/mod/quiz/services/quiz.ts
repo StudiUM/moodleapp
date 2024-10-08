@@ -2152,6 +2152,7 @@ export type AddonModQuizAttemptWSData = {
         feedbacktextformat?: CoreTextFormat; // Feedback format (only if set).
         feedbackinlinefiles?: CoreWSExternalFile[]; // Feedback inline files (only if set).
     };
+    attemptsectionsmarks?: string;
 };
 
 /**
