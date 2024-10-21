@@ -32,15 +32,8 @@
             <div class="ion-text-wrap ion-text-center core-login-info-box">
                 <div class="core-login-site">
                     <div class="core-login-site-logo" *ngIf="!showUserAvatar">
-                        <!-- Show site logo or a default image. -->
-                        <img *ngIf="logoUrl" [src]="logoUrl" role="presentation" onError="this.src='assets/img/logo_studiUM_mobile.svg'" alt="">
-                        <img *ngIf="!logoUrl" src="assets/img/logo_studiUM_mobile.svg" class="login-logo" role="presentation" alt="">
+                        <div class="core-login-site-logo-studium" [attr.aria-label]="siteInfo?.siteName"></div>
                     </div>
-
-                    <p *ngIf="siteInfo?.siteName" class="ion-no-margin ion-no-padding core-sitename">
-                        <core-format-text [text]="siteInfo?.siteName" [filter]="false" />
-                    </p>
-                    <p class="core-siteurl" *ngIf="displaySiteUrl">{{site.siteUrl}}</p>
                 </div>
 
                 <div class="core-login-user">
