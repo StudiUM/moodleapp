@@ -1,8 +1,8 @@
 {
     "app_id": "ca.umontreal.studiumprod",
     "appname": "StudiUM Mobile",
-    "versioncode": 44103,
-    "versionname": "4.4.1",
+    "versioncode": 45002,
+    "versionname": "4.5.0",
     "cache_update_frequency_usually": 420000,
     "cache_update_frequency_often": 1200000,
     "cache_update_frequency_sometimes": 3600000,
