@@ -20,7 +20,7 @@
         "high": 120
     },
     "customurlscheme": "studiummobile",
-    "sites": [{"name": "StudiUM PP", "url": "https://studium-pre-prod.ena.umontreal.ca/"}, {"name": "StudiUM formation continue PP", "url": "https://studiumfc-pre-prod.ena.umontreal.ca/"}],
+    "sites": [{"name": "StudiUM PP", "url": "https://udem-moodle-uat.cena-test.catalyst-ca.net/"}, {"name": "StudiUM formation continue PP", "url": "https://studiumfc-pre-prod.ena.umontreal.ca/"}],
     "multisitesdisplay": "radio",
     "sitefindersettings": {},
     "onlyallowlistedsites": false,
