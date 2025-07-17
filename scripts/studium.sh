@@ -63,3 +63,5 @@ if [ "$DEVICE_TARGET" == "ios" ]; then
 fi
 
 echo "Le fichier google-services.json a été généré avec succès"
+
+cat config.xml

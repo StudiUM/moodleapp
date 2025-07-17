@@ -26,3 +26,12 @@ echo "Ici remplacement chaine"
 
 sed -i '' 's/#import "Moodle-Swift.h"/#import "StudiUM_mobile-Swift.h"/g' "$(pwd)/platforms/ios/StudiUM mobile/Plugins/@moodlehq/phonegap-plugin-push/EncryptionHandler.m"
 cat "$(pwd)/platforms/ios/StudiUM mobile/Plugins/@moodlehq/phonegap-plugin-push/EncryptionHandler.m"
+
+INFO_PLIST_PATH="$(pwd)/platforms/ios/StudiUM mobile/Info.plist"
+
+if [ -f "$INFO_PLIST_PATH" ]; then
+  echo "📄 Contenu de Info.plist généré :"
+  cat "$INFO_PLIST_PATH"
+else
+  echo "❌ Fichier Info.plist non trouvé à $INFO_PLIST_PATH"
+fi
