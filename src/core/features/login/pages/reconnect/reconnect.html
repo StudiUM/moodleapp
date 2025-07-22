@@ -27,10 +27,10 @@
 
                 <div class="ion-text-wrap ion-text-center core-login-info-box">
                     <div class="core-login-site">
-                        <core-site-logo siteNameMode="p" [showLogo]="!showUserAvatar" [site]="site" />
-
-                        @if (displaySiteUrl) {
-                            <p class="core-siteurl">{{site.siteUrl}}</p>
+                        @if (!showUserAvatar) {
+                            <div class="core-login-site-logo">
+                                <div class="core-login-site-logo-studium" [attr.aria-label]="siteInfo?.siteName"></div>
+                            </div>
                         }
                     </div>
 
