@@ -14,8 +14,8 @@ if [ ! -z "$2" ]; then
 fi
 
 # Vérifier les valeurs possibles
-if [[ "$STUDIUM_ENV" != "preprod" && "$STUDIUM_ENV" != "prod" ]]; then
-  echo "Erreur: STUDIUM_ENV doit être 'preprod' ou 'prod'."
+if [[ "$STUDIUM_ENV" != "preprod" && "$STUDIUM_ENV" != "prod" && "$STUDIUM_ENV" != "uat"]]; then
+  echo "Erreur: STUDIUM_ENV doit être 'prod', 'preprod' ou 'uat'."
   exit 1
 fi
 
