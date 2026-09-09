@@ -31,7 +31,7 @@ import { CoreNavigator } from '@services/navigator';
 import { ContextLevel } from '@/core/constants';
 import { CorePromiseUtils } from '@static/promise-utils';
 import { ADDON_COMPETENCY_SUMMARY_PAGE, AddonCompetencyLearningPlanStatus } from '@addons/competency/constants';
-import { CoreText } from '@singletons/text';
+import { CoreText } from '@static/text';
 import { CoreSwipeNavigationItemsManager } from '@classes/items-management/swipe-navigation-items-manager';
 import { CoreRoutedItemsManagerSourcesTracker } from '@classes/items-management/routed-items-manager-sources-tracker';
 import { AddonCompetencyPlanCompetenciesSource } from '@addons/competency/classes/competency-plan-competencies-source';
