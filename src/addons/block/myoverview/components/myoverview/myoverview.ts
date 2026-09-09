@@ -648,7 +648,6 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
     }
 
     /**
-<<<<<<< HEAD
      * Get the first active filter, 'all' if no active filter.
      *
      * @returns First active filter.
