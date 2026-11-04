@@ -665,17 +665,17 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
     /**
      * Get course order.
      *
-     * @param {any} course
-     * @returns {number} number.
+     * @param course Course data.
+     * @returns Course order.
      */
-    protected getCourseOrder(course: any): number {
+    protected getCourseOrder(course: { shortname: string; category?: number }): number {
         // eslint-disable-next-line
         const timseasonslist = { H : '1', E : '2', A : '3' };
         /* eslint-disable no-useless-escape */
         const matches = course.shortname.match(/([\-][AHE][0-9]{2})$/);
         if (matches) {
-            const season = matches[0].substr(1, 1);
-            const year = matches[0].substr(2, 2);
+            const season = matches[0].slice(1, 2);
+            const year = matches[0].slice(2, 4);
 
             return parseInt(year + timseasonslist[season]);
         } else if (this.sort.programscateid == course.category) {
