@@ -42,6 +42,8 @@ jobs:
               run: npm run build:test
               env:
                   MOODLE_APP_COVERAGE: true
+                  STUDIUM_NAME: "StudiUM"
+                  STUDIUM_URL: "https://studium.umontreal.ca"
 
             - name: Generate SSL certificates
               working-directory: app
