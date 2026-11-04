@@ -83,7 +83,7 @@ describe('Credentials page', () => {
         });
 
         // Assert.
-        expect(findElement(fixture, '.core-siteurl', siteUrl)).not.toBeNull();
+        expect(findElement(fixture, '.core-login-site-logo-studium')).not.toBeNull();
     });
 
     it('suggests contacting support after multiple failed attempts', async () => {

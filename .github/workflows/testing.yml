@@ -22,6 +22,9 @@ jobs:
       - name: Install languages
         run: |
           npx gulp lang
+          # Unit tests need the es and af translations to check language changes.
+          jq '.languages += {"es": "Español", "af": "Afrikaans"}' moodle.config.json > /tmp/moodle.config.json
+          mv /tmp/moodle.config.json moodle.config.json
           npm run lang:update-langpacks
       - name: Check langindex
         run: |
@@ -70,6 +73,8 @@ jobs:
           npm run prod --prefix cordova-plugin-moodleapp
         env:
           MOODLE_APP_CIRCULAR_DEPENDENCIES: true
+          STUDIUM_NAME: "StudiUM"
+          STUDIUM_URL: "https://studium.umontreal.ca"
       - name: Circular dependencies
         run: |
           cat circular-dependencies

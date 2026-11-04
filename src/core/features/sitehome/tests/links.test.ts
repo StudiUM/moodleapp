@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { mockSingleton } from '@/testing/utils';
+import { CoreConstants } from '@/core/constants';
 import { CoreSite } from '@classes/sites/site';
 import { CoreContentLinksDelegate } from '@features/contentlinks/services/contentlinks-delegate';
 import { CoreLoginHelper } from '@features/login/services/login-helper';
@@ -41,7 +42,7 @@ describe('Site Home link handlers', () => {
         CoreContentLinksDelegate.registerHandler(new CoreSiteHomeIndexLinkHandlerService());
 
         // Act.
-        await CoreCustomURLSchemes.handleCustomURL(`moodlemobile://link=${siteUrl}/?redirect=0`);
+        await CoreCustomURLSchemes.handleCustomURL(`${CoreConstants.CONFIG.customurlscheme}://link=${siteUrl}/?redirect=0`);
 
         // Assert.
         expect(CoreNavigator.navigateToSitePath).toHaveBeenCalledWith('/home/site', {
