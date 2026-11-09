@@ -40,6 +40,9 @@ jobs:
             - name: Build app
               working-directory: app
               run: npm run build:test
+              env:
+                  STUDIUM_NAME: "StudiUM"
+                  STUDIUM_URL: "https://studium.umontreal.ca"
 
             - name: Generate SSL certificates
               working-directory: app

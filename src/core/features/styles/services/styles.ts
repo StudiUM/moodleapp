@@ -24,7 +24,7 @@ import { Md5 } from 'ts-md5';
 import { CoreLogger } from '@static/logger';
 import { CoreConstants } from '@/core/constants';
 import { CoreConfig } from '@services/config';
-import { CoreDomUtils } from '@services/utils/dom';
+import { CoreHTMLClasses } from '@static/html-classes';
 
 /**
  * Interface that all style handlers must implement.
@@ -227,9 +227,9 @@ export class CoreStylesService {
         if (url.match(currentLangRegEx)) {
             currentsite = CoreConstants.STUDIUMFC;
         }
-        CoreDomUtils.toggleModeClass(CoreConstants.STUDIUM, false);
-        CoreDomUtils.toggleModeClass(CoreConstants.STUDIUMFC, false);
-        CoreDomUtils.toggleModeClass(currentsite, true);
+        CoreHTMLClasses.toggleModeClass(CoreConstants.STUDIUM, false);
+        CoreHTMLClasses.toggleModeClass(CoreConstants.STUDIUMFC, false);
+        CoreHTMLClasses.toggleModeClass(currentsite, true);
         CoreConfig.set(CoreConstants.CURRENT_STUDIUM_SITE, currentsite);
     }
 
@@ -238,8 +238,8 @@ export class CoreStylesService {
      *
      */
     setStudiumDefaultSite(): void {
-        CoreDomUtils.toggleModeClass(CoreConstants.STUDIUM, true);
-        CoreDomUtils.toggleModeClass(CoreConstants.STUDIUMFC, false);
+        CoreHTMLClasses.toggleModeClass(CoreConstants.STUDIUM, true);
+        CoreHTMLClasses.toggleModeClass(CoreConstants.STUDIUMFC, false);
         CoreConfig.set(CoreConstants.CURRENT_STUDIUM_SITE, CoreConstants.STUDIUM);
     }
 
